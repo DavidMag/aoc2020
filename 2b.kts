@@ -8,14 +8,15 @@ val millis = measureTimeMillis {
     input.forEach {
         val splits = it.split(' ')
         val indexes = splits[0].split('-').map { it.toInt() }
+        val password = splits[2]
         val char = splits[1].first()
         var counter = 0
 
         indexes.forEach { i ->
             val wrongIndexedIndex = i - 1
 
-            if ((wrongIndexedIndex >= 0 || wrongIndexedIndex < splits[2].count()) &&
-                splits[2][wrongIndexedIndex] == char) {
+            if ((wrongIndexedIndex >= 0 || wrongIndexedIndex < password.count()) &&
+                    password[wrongIndexedIndex] == char) {
                 counter++
             }
         }
