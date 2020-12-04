@@ -2,7 +2,9 @@ import java.io.File
 import kotlin.system.measureTimeMillis
 
 val millis = measureTimeMillis {
-    val input = File("./4.txt").readText().split("\n\n")
+    val input = File("./4.txt")
+            .readText()
+            .split("\n\n")
     val eyeColors = arrayOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth")
     var valid = 0
 
