@@ -1,6 +1,5 @@
 import java.io.File
 import kotlin.system.measureTimeMillis
-import kotlin.collections.HashMap
 
 val millis = measureTimeMillis {
     val input = File("./4.txt").readText().split("\n\n")
@@ -9,60 +8,39 @@ val millis = measureTimeMillis {
 
     input.forEach {
         var validArgs = 0
-        var dict = mutableMapOf<String, String>()
+        it
+                .replace("\n", " ")
+                .split(" ")
+                .forEach {
+                    val value = it.substringAfter(":")
 
-        it.replace("\n", " ").split(" ").forEach { string ->
-            dict[string.substringBefore(":")] = string.substringAfter(":")
-        }
+                    when (it.substringBefore(":")) {
+                        "byr" -> if (IntRange(1920, 2002).contains(value.toInt())) validArgs++
+                        "iyr" -> if (IntRange(2010, 2020).contains(value.toInt())) validArgs++
+                        "eyr" -> if (IntRange(2020, 2030).contains(value.toInt())) validArgs++
+                        "ecl" -> if (eyeColors.contains(value)) validArgs++
+                        "pid" -> if (value.length == 9 && value.toIntOrNull() != null) validArgs++
+                        "hcl" -> {
+                            val n = value.replace("#", "").toLongOrNull(16)
+                            if (value.startsWith("#") && value.count() == 7 && n != null) validArgs++
+                        }
+                        "hgt" -> {
+                            val range = when {
+                                value.endsWith("in") -> IntRange(59, 76)
+                                value.endsWith("cm") -> IntRange(150, 193)
+                                else -> IntRange(-1, -1)
+                            }
 
-        it.replace("\n", " ").split(" ").associateBy { string ->
-            dict[string.substringBefore(":")] = stringgit .substringAfter(":")
-        }
-
-        dict.forEach {
-            when (it.key) {
-                "byr" -> {
-                    val number = it.value.toInt()
-                    if (number <= 2002 && number >= 1920) validArgs++
-                }
-                "iyr" -> {
-                    val number = it.value.toInt()
-                    if (number <= 2020 && number >= 2010) validArgs++
-                }
-                "eyr" -> {
-                    val number = it.value.toInt()
-                    if (number <= 2030 && number >= 2020) validArgs++
-                }
-                "hgt" -> {
-                    var min = 150
-                    var max = 193
-                    if (it.value.contains("in")) {
-                        min = 59
-                        max = 76
+                            val number = value.replace("in", "").replace("cm", "").toInt()
+                            if (range.contains(number)) validArgs++
+                        }
                     }
-
-                    val number = it.value.replace("in", "").replace("cm", "").toInt()
-                    if (number <= max && number >= min && (it.value.endsWith("cm") || it.value.endsWith("in"))) validArgs++
                 }
-                "hcl" -> {
-                    val n = it.value.replace("#", "").toLongOrNull(16)
-                    if (it.value.startsWith("#") && it.value.count() == 7 && n != null) validArgs++
-                }
-                "ecl" -> {
-                    if (eyeColors.contains(it.value)) validArgs++
-                }
-                "pid" -> {
-                    val n = it.value.toIntOrNull()
-                    if (it.value.length == 9 && n != null) validArgs++
-                }
-            }
-        }
 
         if (validArgs == 7) valid++
     }
 
     println(valid)
-
 }
 
 println("took: ${millis}ms")
