@@ -13,7 +13,7 @@ val millis = measureTimeMillis {
                         .forEach {
                             val n = Character.getNumericValue(it.trim().first())
                             val s = it
-                                    .replace("\\d|bag(s.|s|.|)".toRegex(), "")
+                                    .replace("\\d|bags?\\.?)".toRegex(), "")
                                     .trim()
                             subRules[s] = n
                         }
