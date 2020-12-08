@@ -12,7 +12,6 @@ val millis = measureTimeMillis {
         result = loopNumber(input, ++index)
     }
 
-
     println(result.second)
 }
 
@@ -51,9 +50,5 @@ fun loopNumber(input: List<String>, replaceIndex: Int): Pair<Boolean, Int> {
         }
     }
 
-    if (index >= input.count()) {
-        return Pair(true, accumulator)
-    } else {
-        return Pair(false, accumulator)
-    }
+    return Pair(index >= input.count(), accumulator)
 }

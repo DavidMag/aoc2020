@@ -8,14 +8,13 @@ val millis = measureTimeMillis {
     val input = File("./8.txt")
             .readLines()
 
-
     while (index >= 0 && index < input.count() && visited.contains(index).not()) {
         visited.add(index)
 
         val a = input[index].split(" ")
         val instruction = a[0]
         val value = a[1].toInt()
-//println("$instruction : $value")
+
         when (instruction) {
             "nop" -> index++
             "jmp" -> index += value
@@ -26,7 +25,7 @@ val millis = measureTimeMillis {
         }
     }
 
-println(accumulator)
+    println(accumulator)
 }
 
 println("took: ${millis}ms")
