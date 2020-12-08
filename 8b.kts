@@ -18,7 +18,7 @@ val millis = measureTimeMillis {
 
 println("took: ${millis}ms")
 
-fun loopNumber(input: List<String>, replaceIndex: Int) : Pair<Boolean, Int> {
+fun loopNumber(input: List<String>, replaceIndex: Int): Pair<Boolean, Int> {
     var index = 0
     var nopJmpIndex = 0
     var accumulator = 0
@@ -33,20 +33,14 @@ fun loopNumber(input: List<String>, replaceIndex: Int) : Pair<Boolean, Int> {
 
         when (instruction) {
             "nop" -> {
-                if (replaceIndex == nopJmpIndex) {
-                    index += value
-                } else {
-                    index++
-                }
+                if (replaceIndex == nopJmpIndex) index += value
+                else index++
 
                 nopJmpIndex++
             }
             "jmp" -> {
-                if (replaceIndex == nopJmpIndex) {
-                    index++
-                } else {
-                    index += value
-                }
+                if (replaceIndex == nopJmpIndex) index++
+                else index += value
 
                 nopJmpIndex++
             }
